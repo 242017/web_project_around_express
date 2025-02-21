@@ -4,6 +4,7 @@
   "description": "Alrededor de los EE. UU.",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "dev": "nodemon app.js",
     "lint": "npx eslint ."
   },
