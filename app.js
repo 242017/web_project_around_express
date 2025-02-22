@@ -8,7 +8,7 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 const errorHandler = (req, res, next) => {
-  res.status(404).json({ message: "Recurso solicitado no encontrado" });
+  res.status(404).json({ message: 'Recurso solicitado no encontrado' });
 };
 
 app.use(express.static(path.join(__dirname, 'public')));
