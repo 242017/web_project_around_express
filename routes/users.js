@@ -1,28 +1,10 @@
 const users = require('express').Router();
-const fs = require('fs');
-const path = require('path');
+const { getUsers, getUser, createUser, updateUser, updateAvatar } = require('../controllers/users');
 
-// Ruta absoluta para el archivo users.json
-const usersFilePath = path.join(__dirname, '../data/users.json');
-
-// Manejador para obtener todos los usuarios
-users.get('/users', (req, res) => {
-  fs.readFile(usersFilePath, 'utf8', (err, data) => {
-    const users = JSON.parse(data);
-    res.send(users);
-  });
-});
-
-// Manejador para obtener un usuario por su ID
-users.get('/users/:id', (req, res) => {
-  fs.readFile(usersFilePath, 'utf8', (err, data) => {
-    const users = JSON.parse(data);
-    const user = users.find(u => u._id === req.params.id);
-    if (!user) {
-      return res.send({ message: 'ID de usuario no encontrado' });
-    }
-    res.send(user);
-  });
-});
+users.get('/users', getUsers);
+users.get('/users/:id', getUser);
+users.post('/users', createUser);
+users.patch('/users/me', updateUser);
+users.patch('/users/me/avatar', updateAvatar);
 
 module.exports = users;
