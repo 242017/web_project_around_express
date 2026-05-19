@@ -1,31 +1,18 @@
 {
-  "name": "web_project_around_express",
+  "name": "web_project_around_express_clean",
   "version": "1.0.0",
-  "description": "Alrededor de los EE. UU.",
+  "description": "",
   "main": "app.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "nodemon app.js",
     "dev": "nodemon app.js",
-    "lint": "npx eslint ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/axelcisneros/web_project_around_express.git"
-  },
-  "author": "Axel Cisneros",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/axelcisneros/web_project_around_express/issues"
-  },
-  "homepage": "https://github.com/axelcisneros/web_project_around_express#readme",
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.31.0",
-    "nodemon": "^3.1.9"
+    "start": "node app.js"
   },
   "dependencies": {
-    "express": "^4.21.2",
-    "mongoose": "^8.10.1"
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
   }
 }
