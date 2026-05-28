@@ -6,25 +6,28 @@ const maxlengthMessage = 'El campo {PATH} debe tener como máximo {MAXLENGTH} ca
 const urlMessage = 'El campo {PATH} debe ser una URL válida.';
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, requiredMessage],
-        minlength: [2, minlengthMessage],
-        maxlength: [30, maxlengthMessage]
+  name: {
+    type: String,
+    required: [true, requiredMessage],
+    minlength: [2, minlengthMessage],
+    maxlength: [30, maxlengthMessage],
+  },
+  about: {
+    type: String,
+    required: [true, requiredMessage],
+    minlength: [2, minlengthMessage],
+    maxlength: [30, maxlengthMessage],
+  },
+  avatar: {
+    type: String,
+    required: [true, requiredMessage],
+    validate: {
+      validator: function (v) {
+        return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)?/.test(v);
+      },
+      message: urlMessage,
     },
-    about: {
-        type: String,
-        required: [true, requiredMessage],
-        minlength: [2, minlengthMessage],
-        maxlength: [30, maxlengthMessage]
-    },
-    avatar: {
-        type: String,
-        required: [true, requiredMessage],
-        validate: {
-            validator: (v) => /^(https?:\/\/)([\w\-_]+\.)+[\w\-_]+(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/.test(v),
-            message: urlMessage
-        }
-    }
+  },
 });
+
 module.exports = mongoose.model('user', userSchema);

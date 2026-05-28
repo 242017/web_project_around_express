@@ -2,39 +2,47 @@ const express = require('express');
 const path = require('path');
 const routesUsers = require('./routes/users');
 const routesCards = require('./routes/cards');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const app = express();
 
+const app = express();
 const { PORT = 3000 } = process.env;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware para leer JSON (CORRECTO)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//Se conecta a la base de datos de mongodb en el puerto 27017 y la base de datos se llama aroundb
+// Conexión a MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/aroundb', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
-const errorHandler = (req, res, next) => {
-  res.status(404).json({ message: 'Recurso solicitado no encontrado' });
-};
-
+// Archivos estáticos (si tienes frontend)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware para agregar el usuario a la petición, temporal
+// Middleware temporal de usuario
 app.use((req, res, next) => {
   req.user = {
-    _id: '67c3a6fbb80569b215292512'
+    _id: '67c3a6fbb80569b215292512',
   };
   next();
 });
-app.use('/', routesUsers);
-app.use('/', routesCards);
-// Middleware para rutas no encontradas
+
+// 🚨 RUTAS CORREGIDAS (ESTO ES LO IMPORTANTE)
+app.use('/users', routesUsers);
+app.use('/cards', routesCards);
+
+// Error handler (debe ir al final)
+const errorHandler = (err, req, res, next) => {
+  console.error(err);
+  res.status(err.statusCode || 500).json({
+    message: err.message || 'Error interno del servidor',
+  });
+};
+
 app.use(errorHandler);
 
+// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}...`);
+  console.log(`App listening on port ${PORT}...`);
 });

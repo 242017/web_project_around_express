@@ -64,8 +64,11 @@ const dislikeCard = (req, res) => {
 };
 
 const createCard = (req, res) => {
-  console.log(req.user._id);
-  const { name, link } = req.body;
+  console.log('REQ USER:', req.user);
+  console.log('REQ BODY:', req.body);
+
+  res.send({ ok: true });
+};
   Card.create({ name, link, owner: req.user._id })
       .then((card) => res.send(card))
       .catch((err) => {
@@ -75,7 +78,6 @@ const createCard = (req, res) => {
               res.status(500).send({ message: 'Error interno del servidor' });
           }
       });
-};
 
 const deleteCard = (req, res) => {
     Card.findByIdAndDelete(req.params.id)
